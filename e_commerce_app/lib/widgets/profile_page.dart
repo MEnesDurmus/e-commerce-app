@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/main.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -7,7 +8,7 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var tSize = MediaQuery.of(context).size;
     return Container(
-      padding: EdgeInsets.all(25),
+      padding: EdgeInsets.all(20),
       child: Column(
         children: [
           Row(
@@ -81,18 +82,30 @@ class ProfilePage extends StatelessWidget {
                 ],
               ),
               child: Container(
-                padding: EdgeInsets.all(2),
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(8)),
+                padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8), color: white),
+                //height: tSize.height * (1 / 4),
                 child: Column(
                   children: [
                     ElevatedContainerRow(
                       icon: Icons.format_list_bulleted_sharp,
                       text: 'All My Orders',
                     ),
+                    RowDivider(),
                     ElevatedContainerRow(
                       icon: Icons.local_shipping_outlined,
                       text: 'Pending Shipments',
+                    ),
+                    RowDivider(),
+                    ElevatedContainerRow(
+                      icon: Icons.payment_rounded,
+                      text: 'Pending Payments',
+                    ),
+                    RowDivider(),
+                    ElevatedContainerRow(
+                      icon: Icons.badge_rounded,
+                      text: 'Finished Orders',
                     )
                   ],
                 ),
@@ -125,24 +138,46 @@ class ElevatedContainerRow extends StatelessWidget {
           SizedBox(width: 10),
           Text(
             text,
-            style: TextStyle(fontSize: 20, color: textColor),
+            style: TextStyle(
+                fontSize: 20, color: textColor, fontFamily: "Raleway"),
           ),
           Expanded(
               child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Container(
+                margin: EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                    color: Colors.grey[300], shape: BoxShape.circle),
+                child: Container(
                   margin: EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                      color: Colors.grey[300], shape: BoxShape.circle),
-                  child: Container(
-                      margin: EdgeInsets.all(5),
-                      child: Icon(
-                        Icons.arrow_forward_ios,
-                        size: 10,
-                      ))),
+                  child: Icon(
+                    Icons.arrow_forward_ios,
+                    size: 10,
+                  ),
+                ),
+              ),
             ],
           ))
+        ],
+      ),
+    );
+  }
+}
+
+class RowDivider extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    double h = 2.0;
+    return Container(
+      child: Column(
+        children: [
+          SizedBox(height: h),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+            child: Divider(color: textColor),
+          ),
+          SizedBox(height: h),
         ],
       ),
     );
