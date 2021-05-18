@@ -61,8 +61,11 @@ class MainPage extends StatelessWidget {
           systemOverlayStyle:
               SystemUiOverlayStyle(statusBarColor: Colors.white),
         ),
-        body: Center(
-          child: _widgetOptions.elementAt(provider.selectedIndex),
+        body: Container(
+          color: white,
+          child: Center(
+            child: _widgetOptions.elementAt(provider.selectedIndex),
+          ),
         ),
         bottomNavigationBar: BottomNavigationBar(
           items: [
