@@ -66,51 +66,52 @@ class ProfilePage extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(5),
-            child: Container(
-              margin: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey,
-                    blurRadius: 5.0,
-                    spreadRadius: 0.0,
-                    offset: Offset(2.0, 2.0),
-                  ),
-                ],
+          ElevatedContainer(
+            children: [
+              ElevatedContainerRow(
+                icon: Icons.format_list_bulleted_sharp,
+                text: 'All My Orders',
               ),
-              child: Container(
-                padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8), color: white),
-                //height: tSize.height * (1 / 4),
-                child: Column(
-                  children: [
-                    ElevatedContainerRow(
-                      icon: Icons.format_list_bulleted_sharp,
-                      text: 'All My Orders',
-                    ),
-                    RowDivider(),
-                    ElevatedContainerRow(
-                      icon: Icons.local_shipping_outlined,
-                      text: 'Pending Shipments',
-                    ),
-                    RowDivider(),
-                    ElevatedContainerRow(
-                      icon: Icons.payment_rounded,
-                      text: 'Pending Payments',
-                    ),
-                    RowDivider(),
-                    ElevatedContainerRow(
-                      icon: Icons.badge_rounded,
-                      text: 'Finished Orders',
-                    )
-                  ],
-                ),
+              RowDivider(),
+              ElevatedContainerRow(
+                icon: Icons.local_shipping_outlined,
+                text: 'Pending Shipments',
               ),
-            ),
+              RowDivider(),
+              ElevatedContainerRow(
+                icon: Icons.payment_rounded,
+                text: 'Pending Payments',
+              ),
+              RowDivider(),
+              ElevatedContainerRow(
+                icon: Icons.badge_rounded,
+                text: 'Finished Orders',
+              )
+            ],
+          ),
+          SizedBox(height: 5),
+          ElevatedContainer(
+            children: [
+              ElevatedContainerRow(
+                icon: Icons.mail_outline_rounded,
+                text: 'Invite Friends',
+              ),
+              RowDivider(),
+              ElevatedContainerRow(
+                icon: Icons.support_agent_rounded,
+                text: 'Customer Support',
+              ),
+              RowDivider(),
+              ElevatedContainerRow(
+                icon: Icons.rate_review_outlined,
+                text: 'Rate Our App',
+              ),
+              RowDivider(),
+              ElevatedContainerRow(
+                icon: Icons.mode_edit_outline_rounded,
+                text: 'Make a Suggestion',
+              )
+            ],
           )
         ],
       ),
@@ -118,7 +119,7 @@ class ProfilePage extends StatelessWidget {
   }
 }
 
-const textColor = Color(0xff515c6f);
+const textColor = Color(0xff727c8e);
 
 class ElevatedContainerRow extends StatelessWidget {
   final IconData icon;
@@ -138,8 +139,7 @@ class ElevatedContainerRow extends StatelessWidget {
           SizedBox(width: 10),
           Text(
             text,
-            style: TextStyle(
-                fontSize: 20, color: textColor, fontFamily: "Raleway"),
+            style: TextStyle(fontSize: 20, color: textColor),
           ),
           Expanded(
               child: Row(
@@ -179,6 +179,40 @@ class RowDivider extends StatelessWidget {
           ),
           SizedBox(height: h),
         ],
+      ),
+    );
+  }
+}
+
+class ElevatedContainer extends StatelessWidget {
+  final List<Widget> children;
+
+  const ElevatedContainer({Key? key, required this.children}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(5),
+        child: Container(
+          margin: EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey,
+                blurRadius: 5.0,
+                spreadRadius: 0.0,
+                offset: Offset(2.0, 2.0),
+              ),
+            ],
+          ),
+          child: Container(
+            padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8), color: white),
+            child: Column(children: children),
+          ),
+        ),
       ),
     );
   }
