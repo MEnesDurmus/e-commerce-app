@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/providers/main_provider.dart';
 import 'package:e_commerce_app/widgets/cart_page.dart';
+import 'package:e_commerce_app/widgets/common_variables.dart';
 import 'package:e_commerce_app/widgets/home_page.dart';
 import 'package:e_commerce_app/widgets/more_page.dart';
 import 'package:e_commerce_app/widgets/profile_page.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: white,
+        primarySwatch: bgMaterialColor,
       ),
       home: MainPage(),
     );
@@ -62,7 +63,7 @@ class MainPage extends StatelessWidget {
               SystemUiOverlayStyle(statusBarColor: Colors.white),
         ),
         body: Container(
-          color: white,
+          color: bgMaterialColor,
           child: Center(
             child: _widgetOptions.elementAt(provider.selectedIndex),
           ),
@@ -92,7 +93,7 @@ class MainPage extends StatelessWidget {
           ],
           type: BottomNavigationBarType.fixed,
           currentIndex: provider.selectedIndex,
-          selectedItemColor: Color(0xffff6969),
+          selectedItemColor: mRedAccent,
           unselectedItemColor: Color(0xff727c8e),
           onTap: provider.setIndex,
         ),
@@ -101,18 +102,18 @@ class MainPage extends StatelessWidget {
   }
 }
 
-const MaterialColor white = const MaterialColor(
-  0xFFFFFFFF,
+const MaterialColor bgMaterialColor = const MaterialColor(
+  0xfff5f6f8,
   const <int, Color>{
-    50: const Color(0xFFFFFFFF),
-    100: const Color(0xFFFFFFFF),
-    200: const Color(0xFFFFFFFF),
-    300: const Color(0xFFFFFFFF),
-    400: const Color(0xFFFFFFFF),
-    500: const Color(0xFFFFFFFF),
-    600: const Color(0xFFFFFFFF),
-    700: const Color(0xFFFFFFFF),
-    800: const Color(0xFFFFFFFF),
-    900: const Color(0xFFFFFFFF),
+    50: const Color(0xfff5f6f8),
+    100: const Color(0xfff5f6f8),
+    200: const Color(0xfff5f6f8),
+    300: const Color(0xfff5f6f8),
+    400: const Color(0xfff5f6f8),
+    500: const Color(0xfff5f6f8),
+    600: const Color(0xfff5f6f8),
+    700: const Color(0xfff5f6f8),
+    800: const Color(0xfff5f6f8),
+    900: const Color(0xfff5f6f8),
   },
 );
