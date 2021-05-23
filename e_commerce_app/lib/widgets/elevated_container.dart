@@ -19,7 +19,7 @@ class ElevatedContainerRow extends StatelessWidget {
           SizedBox(width: 10),
           Text(
             text,
-            style: TextStyle(fontSize: 20, color: textColor),
+            style: TextStyle(fontSize: 15, color: textColor),
           ),
           Expanded(
               child: Row(

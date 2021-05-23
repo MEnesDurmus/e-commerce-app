@@ -7,77 +7,75 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var tSize = MediaQuery.of(context).size;
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.all(10),
       color: bgColor,
       child: Column(
         children: [
-          Row(
-            children: [
-              Container(
-                width: 100,
-                height: 100,
-                decoration:
-                    BoxDecoration(color: Colors.amber, shape: BoxShape.circle),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    'Enes',
-                    style: TextStyle(
+          Container(
+            padding: EdgeInsets.all(10),
+            child: Row(
+              children: [
+                Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                      color: Colors.amber, shape: BoxShape.circle),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Enes',
+                      style: titleStyle,
+                    ),
+                    Text(
+                      'example@example.com',
+                      style: TextStyle(
                         color: textColor,
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    'example@example.com',
-                    style: TextStyle(
-                      color: textColor,
-                      fontSize: 15,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Container(
-                    height: 30,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Row(
-                        children: [
-                          SizedBox(width: 5),
-                          Text(
-                            'EDIT PROFILE',
-                            style: TextStyle(
-                                color: textColor,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(width: 5),
-                        ],
+                        fontSize: 15,
                       ),
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(bgColor),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18),
-                              side: BorderSide(color: textColor.withAlpha(30)),
-                            ),
-                          )),
                     ),
-                  )
-                ],
-              )
-            ],
+                    SizedBox(height: 10),
+                    Container(
+                      height: 30,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: Row(
+                          children: [
+                            SizedBox(width: 5),
+                            Text(
+                              'EDIT PROFILE',
+                              style: TextStyle(
+                                  color: textColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(width: 5),
+                          ],
+                        ),
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(bgColor),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                side:
+                                    BorderSide(color: textColor.withAlpha(30)),
+                              ),
+                            )),
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
-          SizedBox(
-            height: 10,
-          ),
+          SizedBox(height: 10),
           ElevatedContainer(
             children: [
               ElevatedContainerRow(

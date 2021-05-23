@@ -8,7 +8,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var tSize = MediaQuery.of(context).size;
-    double iconSize = 100;
     return Column(
       children: [
         Container(
@@ -17,7 +16,9 @@ class HomePage extends StatelessWidget {
           child: Text(
             'Categories',
             style: TextStyle(
-                fontSize: 30, fontWeight: FontWeight.bold, color: textColor2),
+                fontSize: titleSize,
+                fontWeight: FontWeight.bold,
+                color: textColor2),
           ),
         ),
         Container(
@@ -54,7 +55,9 @@ class HomePage extends StatelessWidget {
           child: Text(
             'Latest',
             style: TextStyle(
-                fontSize: 30, fontWeight: FontWeight.bold, color: textColor2),
+                fontSize: titleSize,
+                fontWeight: FontWeight.bold,
+                color: textColor2),
           ),
         ),
         Container(
@@ -69,6 +72,34 @@ class HomePage extends StatelessWidget {
               ColorfulBox(
                 size: tSize,
                 colors: [Colors.orangeAccent, Colors.deepOrangeAccent],
+              ),
+            ],
+          ),
+        ),
+        Container(
+          height: 170,
+          padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+          child: ListViewWithSpace(
+            children: [
+              Product(
+                image: backpackImage,
+                productName: 'Backpack',
+                price: '\$20.00',
+              ),
+              Product(
+                image: backpackImage,
+                productName: 'Backpack',
+                price: '\$20.00',
+              ),
+              Product(
+                image: backpackImage,
+                productName: 'Backpack',
+                price: '\$20.00',
+              ),
+              Product(
+                image: backpackImage,
+                productName: 'Backpack',
+                price: '\$20.00',
               ),
             ],
           ),
@@ -168,6 +199,44 @@ class ListViewWithSpace extends StatelessWidget {
     return ListView(
       scrollDirection: Axis.horizontal,
       children: getChildren(),
+    );
+  }
+}
+
+class Product extends StatelessWidget {
+  final String image;
+  final String productName;
+  final String price;
+
+  const Product(
+      {Key? key,
+      required this.image,
+      required this.productName,
+      required this.price})
+      : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8), color: Colors.white),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.network(
+            image,
+            height: 100,
+          ),
+          Text(
+            productName,
+            style: TextStyle(color: textColor),
+          ),
+          Text(
+            price,
+            style: TextStyle(fontWeight: FontWeight.bold, color: textColor2),
+          )
+        ],
+      ),
     );
   }
 }
