@@ -1,17 +1,60 @@
+import 'dart:convert';
+
+import 'package:e_commerce_app/models/product.dart';
 import 'package:e_commerce_app/widgets/category_icon.dart';
 import 'package:e_commerce_app/widgets/common_variables.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final ScrollController scrollController = ScrollController();
+  List<Product> products = <Product>[];
+
+  void arrangePosition(ScrollController scrollController) async {
+    await Future.delayed(Duration(seconds: 1));
+    if (scrollController.offset > 160)
+      scrollController.animateTo(320,
+          duration: Duration(milliseconds: 5000), curve: Curves.fastOutSlowIn);
+    else
+      scrollController.animateTo(0,
+          duration: Duration(milliseconds: 5000), curve: Curves.fastOutSlowIn);
+  }
+
+  _HomePageState() {
+    getJsonData().then((value) => setState(() {
+          products = value;
+        }));
+  }
+
+  Future<List<Product>> getJsonData() async {
+    try {
+      var res = await http.get(Uri.parse(productsJson));
+      if (res.statusCode == 200) {
+        var iJson = jsonDecode(res.body);
+        return List<Product>.from(
+            iJson.map((model) => Product.fromJson(model)));
+      } else
+        return [];
+    } catch (e) {
+      return [];
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     var tSize = MediaQuery.of(context).size;
+    scrollController.addListener(() {
+      print('offset ${scrollController.offset}');
+    });
     return Column(
       children: [
         Container(
-          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
           alignment: Alignment.centerLeft,
           child: Text(
             'Categories',
@@ -64,14 +107,18 @@ class HomePage extends StatelessWidget {
           height: 200,
           padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
           child: ListViewWithSpace(
+            scrollController: scrollController,
             children: [
               ColorfulBox(
                 size: tSize,
                 colors: [Colors.blue.shade300, Colors.blue.shade700],
               ),
-              ColorfulBox(
-                size: tSize,
-                colors: [Colors.orangeAccent, Colors.deepOrangeAccent],
+              GestureDetector(
+                onTap: () {},
+                child: ColorfulBox(
+                  size: tSize,
+                  colors: [Colors.orangeAccent, Colors.deepOrangeAccent],
+                ),
               ),
             ],
           ),
@@ -79,30 +126,22 @@ class HomePage extends StatelessWidget {
         Container(
           height: 170,
           padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
-          child: ListViewWithSpace(
-            children: [
-              Product(
-                image: backpackImage,
-                productName: 'Backpack',
-                price: '\$20.00',
-              ),
-              Product(
-                image: backpackImage,
-                productName: 'Backpack',
-                price: '\$20.00',
-              ),
-              Product(
-                image: backpackImage,
-                productName: 'Backpack',
-                price: '\$20.00',
-              ),
-              Product(
-                image: backpackImage,
-                productName: 'Backpack',
-                price: '\$20.00',
-              ),
-            ],
-          ),
+          child: products.isEmpty
+              ? Container(
+                  child: CircularProgressIndicator(
+                    color: Colors.red,
+                  ),
+                )
+              : ListViewWithSpace(
+                  scrollController: ScrollController(),
+                  children: products.isEmpty
+                      ? []
+                      : [
+                          ProductWidget(product: products[0]),
+                          ProductWidget(product: products[1]),
+                          ProductWidget(product: products[2]),
+                        ],
+                ),
         ),
       ],
     );
@@ -181,7 +220,8 @@ class ColorfulBox extends StatelessWidget {
 
 class ListViewWithSpace extends StatelessWidget {
   final List<Widget> children;
-  ListViewWithSpace({required this.children});
+  final ScrollController scrollController;
+  ListViewWithSpace({required this.children, required this.scrollController});
 
   List<Widget> getChildren() {
     List<Widget> result = <Widget>[];
@@ -199,21 +239,27 @@ class ListViewWithSpace extends StatelessWidget {
     return ListView(
       scrollDirection: Axis.horizontal,
       children: getChildren(),
+      controller: scrollController,
     );
   }
+  // @override
+  // Widget build(BuildContext context) {
+  //   return ScrollablePositionedList.builder(
+  //     scrollDirection: Axis.horizontal,
+  //     itemCount: children.length,
+  //     itemBuilder: (context, index) => children[index],
+  //     itemScrollController: itemScrollController,
+  //   );
+  // }
 }
 
-class Product extends StatelessWidget {
-  final String image;
-  final String productName;
-  final String price;
+class ProductWidget extends StatelessWidget {
+  final Product product;
 
-  const Product(
-      {Key? key,
-      required this.image,
-      required this.productName,
-      required this.price})
-      : super(key: key);
+  const ProductWidget({
+    Key? key,
+    required this.product,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -224,15 +270,15 @@ class Product extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Image.network(
-            image,
+            product.urlLink,
             height: 100,
           ),
           Text(
-            productName,
+            product.name,
             style: TextStyle(color: textColor),
           ),
           Text(
-            price,
+            product.price,
             style: TextStyle(fontWeight: FontWeight.bold, color: textColor2),
           )
         ],

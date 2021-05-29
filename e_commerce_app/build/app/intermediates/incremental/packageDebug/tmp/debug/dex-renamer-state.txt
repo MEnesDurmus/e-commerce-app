@@ -1,4 +1,4 @@
-#Sun May 23 15:35:27 EET 2021
+#Sat May 29 16:10:15 EET 2021
 base.0=C\:\\Users\\en9es\\Desktop\\Flutter\\GitHub\\e-commerce-app\\e_commerce_app\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex
