@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/styles/colors.dart';
 import 'package:e_commerce_app/widgets/common_variables.dart';
 import 'package:e_commerce_app/widgets/elevated_container.dart';
 import 'package:flutter/material.dart';

@@ -1,10 +1,10 @@
+import 'package:e_commerce_app/styles/colors.dart';
 import 'package:flutter/material.dart';
 
 //Colors
-const textColor = Color(0xff727c8e);
-const textColor2 = Color(0xff515c6f);
-const bgColor = Color(0xfff5f6f8);
-const mRedAccent = Color(0xffff6969);
+const textColor = ravenGrey;
+const textColor2 = const Color(0xff515c6f);
+const bgColor = const Color(0xfff5f6f8);
 
 //Icons
 var seeAllIcon = Image.asset("assets/icons/see all.png");

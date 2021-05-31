@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/styles/colors.dart';
 import 'package:e_commerce_app/widgets/category_icon.dart';
 import 'package:e_commerce_app/widgets/common_variables.dart';
 import 'package:flutter/material.dart';
@@ -81,22 +82,22 @@ class HomePage extends StatelessWidget {
           padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
           child: ListViewWithSpace(
             children: [
-              Product(
+              ProductWidget(
                 image: backpackImage,
                 productName: 'Backpack',
                 price: '\$20.00',
               ),
-              Product(
+              ProductWidget(
                 image: backpackImage,
                 productName: 'Backpack',
                 price: '\$20.00',
               ),
-              Product(
+              ProductWidget(
                 image: backpackImage,
                 productName: 'Backpack',
                 price: '\$20.00',
               ),
-              Product(
+              ProductWidget(
                 image: backpackImage,
                 productName: 'Backpack',
                 price: '\$20.00',
@@ -203,12 +204,12 @@ class ListViewWithSpace extends StatelessWidget {
   }
 }
 
-class Product extends StatelessWidget {
+class ProductWidget extends StatelessWidget {
   final String image;
   final String productName;
   final String price;
 
-  const Product(
+  const ProductWidget(
       {Key? key,
       required this.image,
       required this.productName,

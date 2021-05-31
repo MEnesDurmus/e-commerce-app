@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/providers/main_provider.dart';
+import 'package:e_commerce_app/styles/colors.dart';
 import 'package:e_commerce_app/widgets/cart_page.dart';
 import 'package:e_commerce_app/widgets/common_variables.dart';
 import 'package:e_commerce_app/widgets/home_page.dart';
@@ -51,6 +52,7 @@ class MainPage extends StatelessWidget {
     return Consumer<MainProvider>(
       builder: (context, provider, _) => Container(
           child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           actions: [
             GestureDetector(child: Icon(Icons.message)),
@@ -62,9 +64,9 @@ class MainPage extends StatelessWidget {
           systemOverlayStyle:
               SystemUiOverlayStyle(statusBarColor: Colors.white),
         ),
-        body: Container(
-          color: bgMaterialColor,
-          child: Center(
+        body: SingleChildScrollView(
+          child: Container(
+            color: bgMaterialColor,
             child: _widgetOptions.elementAt(provider.selectedIndex),
           ),
         ),
@@ -94,7 +96,7 @@ class MainPage extends StatelessWidget {
           type: BottomNavigationBarType.fixed,
           currentIndex: provider.selectedIndex,
           selectedItemColor: mRedAccent,
-          unselectedItemColor: Color(0xff727c8e),
+          unselectedItemColor: ravenGrey,
           onTap: provider.setIndex,
         ),
       )),
