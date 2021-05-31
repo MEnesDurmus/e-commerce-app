@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/styles/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 //Colors
 const textColor = ravenGrey;
@@ -20,3 +21,25 @@ var backpackImage =
 double titleSize = 30;
 var titleStyle = TextStyle(
     color: textColor, fontSize: titleSize, fontWeight: FontWeight.bold);
+
+//Products
+var productsJson =
+    "https://60b2296262ab150017ae1c00.mockapi.io/products/product";
+var product1 =
+    "https://60b2296262ab150017ae1c00.mockapi.io/products/product?id=1";
+var product2 =
+    "https://60b2296262ab150017ae1c00.mockapi.io/products/product?id=2";
+var product3 =
+    "https://60b2296262ab150017ae1c00.mockapi.io/products/product?id=3";
+
+Future<String> getData(String url) async {
+  try {
+    http.Response res = await http.get(Uri.parse(url));
+    if (res.statusCode == 200)
+      return res.body;
+    else
+      return "constFailed";
+  } catch (e) {
+    return "constFailed";
+  }
+}
