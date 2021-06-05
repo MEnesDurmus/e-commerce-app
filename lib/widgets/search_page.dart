@@ -87,17 +87,17 @@ class SearchPage extends StatelessWidget {
                   imageUrl:
                       "https://img.hatshopping.com/Soho-Herringbone-Business-Scarf-by-Barts-black.42221_rf4.jpg",
                   name: "NScarf",
-                  price: 25)),
+                  price: "25")),
               SearchProductCard(Product(
                   imageUrl:
                       "https://img.hatshopping.com/Soho-Herringbone-Business-Scarf-by-Barts-black.42221_rf4.jpg",
                   name: "NScarf",
-                  price: 25)),
+                  price: "25")),
               SearchProductCard(Product(
                   imageUrl:
                       "https://img.hatshopping.com/Soho-Herringbone-Business-Scarf-by-Barts-black.42221_rf4.jpg",
                   name: "NScarf",
-                  price: 25)),
+                  price: "25")),
             ],
           ),
         ),

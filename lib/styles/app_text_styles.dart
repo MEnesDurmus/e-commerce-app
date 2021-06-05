@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/widgets/common_variables.dart';
+import 'package:e_commerce_app/styles/colors.dart';
 import 'package:flutter/material.dart';
 
 const TextStyle textStyle15GreyMedium = const TextStyle(
@@ -9,3 +9,6 @@ const TextStyle textStyle15GreyRegular = const TextStyle(
 
 const TextStyle textStyle12GreyRegular = const TextStyle(
     fontSize: 12, color: textColor2, fontWeight: FontWeight.normal);
+
+const titleStyle =
+    TextStyle(color: textColor2, fontSize: 30, fontWeight: FontWeight.bold);
