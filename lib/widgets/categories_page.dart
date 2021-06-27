@@ -1,8 +1,8 @@
 import 'package:e_commerce_app/main.dart';
 import 'package:e_commerce_app/styles/app_text_styles.dart';
 import 'package:e_commerce_app/styles/colors.dart';
-import 'package:e_commerce_app/widgets/category_icon.dart';
-import 'package:e_commerce_app/widgets/common_variables.dart';
+import 'package:e_commerce_app/widgets/components/category_icon.dart';
+import 'package:e_commerce_app/widgets/components/icons.dart';
 import 'package:flutter/material.dart';
 
 class CategoriesPage extends StatelessWidget {

@@ -2,7 +2,6 @@ import 'package:e_commerce_app/models/product.dart';
 import 'package:e_commerce_app/styles/app_text_styles.dart';
 import 'package:e_commerce_app/styles/colors.dart';
 import 'package:e_commerce_app/util/util_library.dart';
-import 'package:e_commerce_app/widgets/common_variables.dart';
 import 'package:e_commerce_app/widgets/search/search_product_card.dart';
 import 'package:flutter/material.dart';
 
