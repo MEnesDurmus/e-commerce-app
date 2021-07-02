@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/widgets/common_variables.dart';
+import 'package:e_commerce_app/styles/colors.dart';
 import 'package:flutter/material.dart';
 
 class ElevatedContainerRow extends StatelessWidget {

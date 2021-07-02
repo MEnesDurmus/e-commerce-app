@@ -1,19 +1,16 @@
-import 'dart:convert';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/models/product.dart';
-import 'package:e_commerce_app/widgets/category_icon.dart';
-import 'package:e_commerce_app/widgets/common_variables.dart';
+import 'package:e_commerce_app/styles/app_text_styles.dart';
+import 'package:e_commerce_app/styles/colors.dart';
+import 'package:e_commerce_app/util/firebase.dart';
+import 'package:e_commerce_app/widgets/categories_page.dart';
+import 'package:e_commerce_app/widgets/components/category_icon.dart';
+import 'package:e_commerce_app/widgets/components/icons.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
+class HomePage extends StatelessWidget {
   final ScrollController scrollController = ScrollController();
-  List<Product> products = <Product>[];
+  final _productStream = productsCollection.snapshots();
 
   void arrangePosition(ScrollController scrollController) async {
     await Future.delayed(Duration(seconds: 1));
@@ -25,32 +22,13 @@ class _HomePageState extends State<HomePage> {
           duration: Duration(milliseconds: 5000), curve: Curves.fastOutSlowIn);
   }
 
-  _HomePageState() {
-    getJsonData().then((value) => setState(() {
-          products = value;
-        }));
-  }
-
-  Future<List<Product>> getJsonData() async {
-    try {
-      var res = await http.get(Uri.parse(productsJson));
-      if (res.statusCode == 200) {
-        var iJson = jsonDecode(res.body);
-        return List<Product>.from(
-            iJson.map((model) => Product.fromJson(model)));
-      } else
-        return [];
-    } catch (e) {
-      return [];
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     var tSize = MediaQuery.of(context).size;
     scrollController.addListener(() {
       print('offset ${scrollController.offset}');
     });
+    double leftP = 82;
     return Column(
       children: [
         Container(
@@ -58,10 +36,7 @@ class _HomePageState extends State<HomePage> {
           alignment: Alignment.centerLeft,
           child: Text(
             'Categories',
-            style: TextStyle(
-                fontSize: titleSize,
-                fontWeight: FontWeight.bold,
-                color: textColor2),
+            style: titleStyle,
           ),
         ),
         Container(
@@ -74,20 +49,25 @@ class _HomePageState extends State<HomePage> {
               ),
               Positioned(
                   top: 0,
-                  left: 80,
-                  child: CategoryIcon(
-                    beautyIcon,
-                    Text('Beauty'),
-                  )),
+                  left: leftP,
+                  child: CategoryIcon(beautyIcon, Text('Beauty'))),
               Positioned(
                 top: 0,
-                left: 160,
+                left: leftP * 2,
                 child: CategoryIcon(shoesIcon, Text('Shoes')),
               ),
               Positioned(
                 top: 0,
-                left: 240,
-                child: CategoryIcon(seeAllIcon, Text('See All')),
+                left: leftP * 3,
+                child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CategoriesPage()),
+                      );
+                    },
+                    child: CategoryIcon(seeAllIcon, Text('See All'))),
               ),
             ],
           ),
@@ -95,13 +75,7 @@ class _HomePageState extends State<HomePage> {
         Container(
           padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
           alignment: Alignment.centerLeft,
-          child: Text(
-            'Latest',
-            style: TextStyle(
-                fontSize: titleSize,
-                fontWeight: FontWeight.bold,
-                color: textColor2),
-          ),
+          child: Text('Latest', style: titleStyle),
         ),
         Container(
           height: 200,
@@ -123,26 +97,38 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-        Container(
-          height: 170,
-          padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
-          child: products.isEmpty
-              ? Container(
-                  child: CircularProgressIndicator(
-                    color: Colors.red,
-                  ),
-                )
-              : ListViewWithSpace(
-                  scrollController: ScrollController(),
-                  children: products.isEmpty
-                      ? []
-                      : [
-                          ProductWidget(product: products[0]),
-                          ProductWidget(product: products[1]),
-                          ProductWidget(product: products[2]),
+        StreamBuilder<QuerySnapshot>(
+            stream: _productStream,
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Text('Something went wrong!');
+              }
+
+              return Container(
+                height: 170,
+                padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                child: snapshot.connectionState == ConnectionState.waiting
+                    ? Container(
+                        child: CircularProgressIndicator(
+                          color: Colors.red,
+                        ),
+                      )
+                    : ListViewWithSpace(
+                        scrollController: ScrollController(),
+                        children: [
+                          ProductWidget(
+                              product:
+                                  Product.fromDocs(snapshot.data!.docs[0])),
+                          ProductWidget(
+                              product:
+                                  Product.fromDocs(snapshot.data!.docs[1])),
+                          ProductWidget(
+                              product:
+                                  Product.fromDocs(snapshot.data!.docs[2])),
                         ],
-                ),
-        ),
+                      ),
+              );
+            }),
       ],
     );
   }
@@ -187,10 +173,7 @@ class ColorfulBox extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      Text(
-                        'SEE MORE',
-                        style: TextStyle(fontSize: 12),
-                      ),
+                      Text('SEE MORE', style: TextStyle(fontSize: 12)),
                       SizedBox(width: 10),
                       Container(
                         height: 30,
@@ -270,7 +253,7 @@ class ProductWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Image.network(
-            product.urlLink,
+            product.imageUrl,
             height: 100,
           ),
           Text(

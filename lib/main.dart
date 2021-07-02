@@ -1,36 +1,41 @@
-import 'package:e_commerce_app/providers/main_provider.dart';
+import 'package:e_commerce_app/redux/actions.dart';
+import 'package:e_commerce_app/redux/reducers.dart';
+import 'package:e_commerce_app/redux/store.dart';
+import 'package:e_commerce_app/styles/colors.dart';
+import 'package:e_commerce_app/viewmodels/main_viewmodel.dart';
 import 'package:e_commerce_app/widgets/cart_page.dart';
-import 'package:e_commerce_app/widgets/common_variables.dart';
 import 'package:e_commerce_app/widgets/home_page.dart';
 import 'package:e_commerce_app/widgets/more_page.dart';
 import 'package:e_commerce_app/widgets/profile_page.dart';
 import 'package:e_commerce_app/widgets/search_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 
-void main() {
-  runApp(MyProvider());
-}
-
-class MyProvider extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => MainProvider(),
-      child: MyApp(),
-    );
-  }
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  final store =
+      Store<AppState>(appReducer, initialState: AppState.initialState());
+  runApp(MyApp(store));
 }
 
 class MyApp extends StatelessWidget {
+  final Store<AppState> store;
+  MyApp(this.store);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: bgMaterialColor,
+    return StoreProvider<AppState>(
+      store: store,
+      child: MaterialApp(
+        theme: ThemeData(
+          primarySwatch: bgMaterialColor,
+        ),
+        home: MainPage(),
       ),
-      home: MainPage(),
     );
   }
 }
@@ -48,9 +53,14 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<MainProvider>(
-      builder: (context, provider, _) => Container(
+    return StoreConnector<AppState, MainViewModel>(
+      distinct: true,
+      converter: (store) => MainViewModel(
+          state: store.state,
+          onBtmNavTap: (val) => store.dispatch(IndexChangeAction(val))),
+      builder: (context, vm) => Container(
           child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           actions: [
             GestureDetector(child: Icon(Icons.message)),
@@ -62,10 +72,10 @@ class MainPage extends StatelessWidget {
           systemOverlayStyle:
               SystemUiOverlayStyle(statusBarColor: Colors.white),
         ),
-        body: Container(
-          color: bgMaterialColor,
-          child: Center(
-            child: _widgetOptions.elementAt(provider.selectedIndex),
+        body: SingleChildScrollView(
+          child: Container(
+            color: bgMaterialColor,
+            child: _widgetOptions.elementAt(vm.state.currentIndex),
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
@@ -92,10 +102,10 @@ class MainPage extends StatelessWidget {
             ),
           ],
           type: BottomNavigationBarType.fixed,
-          currentIndex: provider.selectedIndex,
+          currentIndex: vm.state.currentIndex,
           selectedItemColor: mRedAccent,
-          unselectedItemColor: Color(0xff727c8e),
-          onTap: provider.setIndex,
+          unselectedItemColor: ravenGrey,
+          onTap: vm.onBtmNavTap,
         ),
       )),
     );
