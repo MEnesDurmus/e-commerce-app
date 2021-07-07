@@ -1,10 +1,10 @@
 import 'package:e_commerce_app/redux/actions.dart';
 import 'package:e_commerce_app/redux/reducers.dart';
-import 'package:e_commerce_app/redux/store.dart';
 import 'package:e_commerce_app/styles/colors.dart';
 import 'package:e_commerce_app/viewmodels/main_viewmodel.dart';
 import 'package:e_commerce_app/widgets/cart_page.dart';
 import 'package:e_commerce_app/widgets/home_page.dart';
+import 'package:e_commerce_app/widgets/auth_page/auth_page.dart';
 import 'package:e_commerce_app/widgets/more_page.dart';
 import 'package:e_commerce_app/widgets/profile_page.dart';
 import 'package:e_commerce_app/widgets/search_page.dart';
@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'redux/redux.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +35,11 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: bgMaterialColor,
         ),
-        home: MainPage(),
+        initialRoute: '/auth',
+        routes: {
+          '/': (context) => MainPage(),
+          '/auth': (context) => AuthPage(),
+        },
       ),
     );
   }
@@ -111,19 +116,3 @@ class MainPage extends StatelessWidget {
     );
   }
 }
-
-const MaterialColor bgMaterialColor = const MaterialColor(
-  0xfff5f6f8,
-  const <int, Color>{
-    50: const Color(0xfff5f6f8),
-    100: const Color(0xfff5f6f8),
-    200: const Color(0xfff5f6f8),
-    300: const Color(0xfff5f6f8),
-    400: const Color(0xfff5f6f8),
-    500: const Color(0xfff5f6f8),
-    600: const Color(0xfff5f6f8),
-    700: const Color(0xfff5f6f8),
-    800: const Color(0xfff5f6f8),
-    900: const Color(0xfff5f6f8),
-  },
-);
