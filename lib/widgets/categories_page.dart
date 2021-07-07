@@ -10,43 +10,44 @@ class CategoriesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: bgMaterialColor,
-      body: Padding(
-        padding: const EdgeInsets.only(top: 58, left: 21, right: 21),
-        child: Container(
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Icon(
-                      Icons.close,
-                      color: mRedAccent,
-                    ),
-                  ),
-                ],
-              ),
-              Text(
-                "All Categories",
-                style: titleStyle,
-              ),
-              ListView(
-                children: [
-                  Row(children: [
-                    Column(
-                      children: [CategoryIcon(apparelIcon, Text('Apperal'))],
-                    ),
-                    Column(),
-                  ])
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
+      body: Text('categories'),
+      //  Padding(
+      //   padding: const EdgeInsets.only(top: 58, left: 21, right: 21),
+      //   child: Container(
+      //     child: Column(
+      //       children: [
+      //         Row(
+      //           mainAxisAlignment: MainAxisAlignment.end,
+      //           children: [
+      //             GestureDetector(
+      //               onTap: () {
+      //                 Navigator.pop(context);
+      //               },
+      //               child: Icon(
+      //                 Icons.close,
+      //                 color: mRedAccent,
+      //               ),
+      //             ),
+      //           ],
+      //         ),
+      //         Text(
+      //           "All Categories",
+      //           style: titleStyle,
+      //         ),
+      //         ListView(
+      //           children: [
+      //             Row(children: [
+      //               Column(
+      //                 children: [CategoryIcon(apparelIcon, Text('Apperal'))],
+      //               ),
+      //               Column(),
+      //             ])
+      //           ],
+      //         )
+      //       ],
+      //     ),
+      //   ),
+      // ),
     );
   }
 }
